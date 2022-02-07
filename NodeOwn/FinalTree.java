@@ -38,51 +38,39 @@ public class FinalTree {
 				
 				rootNode=new Node(parent,current);
 				
-				ArrayList<Node> children= new ArrayList<>();
-				rootNode.setChild(children);
-				for(Employee e2:setArrayList)
-				{
-					
-					int report= e2.getReportingto();
-					int parent2=e2.getId();
-					
-					
-					
-					if(parent==report) {
-						
-						Node currentNode=new Node(parent2,report);
-						rootNode.getChild().add(currentNode);
-					}
-				}
+				getNode(rootNode, setArrayList, parent);
 //				return rootNode;
+				
+				
+				
 			}
 			
 			
-			
-			else {
-			newNode=new Node(parent,current);
-			
-			ArrayList<Node> children= new ArrayList<>();
-			newNode.setChild(children);
-			for(Employee e2:setArrayList)
-			{
-				
-				
-				
-				
-				int report= e2.getReportingto();
-				int parent2=e2.getId();
-				
-				if(parent==report) {
-					Node currentNode=new Node(parent2,report);
-					newNode.getChild().add(currentNode);
-				}
-				
-				
-			}
-		
-			
-			
+//			
+//			else {
+//			newNode=new Node(parent,current);
+//			
+//			ArrayList<Node> children= new ArrayList<>();
+//			newNode.setChild(children);
+//			for(Employee e2:setArrayList)
+//			{
+//				
+//				
+//				
+//				
+//				int report= e2.getReportingto();
+//				int parent2=e2.getId();
+//				
+//				if(parent==report) {
+//					Node currentNode=new Node(parent2,report);
+//					newNode.getChild().add(currentNode);
+//				}
+//				
+//				
+//			}
+//		
+//			
+//			
 //			Node parentNode= new Node();
 //			Node currentNode=new Node();
 //			currentNode.setParent(parent);
@@ -96,11 +84,45 @@ public class FinalTree {
 			
 //			System.out.println("Employeeid :" +e.getId()+" reportto :"+e.getReportingto());
 //			return newNode;
-			}
+//			}
 			}
 		return newNode;
 		
 	}
+	
+	
+	public Node getNode(Node node,ArrayList<Employee> setArrayList,int parent) {
+		ArrayList<Node> childrens=new ArrayList<Node>();
+		node.setChild(childrens);
+		{
+			for(Employee e2:setArrayList)
+			{
+				
+				int report= e2.getReportingto();
+				int parent2=e2.getId();
+				
+				
+				
+				if(parent==report) {
+					
+					Node currentNode=new Node(parent2,report);
+					node.getChild().add(currentNode);
+					for(Node Child:node.getChild()) {
+						getNode(Child, setArrayList, Child.getParent());
+						
+					}
+					
+				}
+			}
+		}
+		
+		return node;
+		
+		
+		
+	}
+	
+	
 	public void display()
 	{
 		display(rootNode);
