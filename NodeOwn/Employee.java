@@ -1,6 +1,5 @@
 package NodeOwn;
 
-import java.util.ArrayList;
 
 public class Employee {
 
@@ -9,7 +8,7 @@ public class Employee {
 	private String lastname;
 	private String designation;
 	private int reportingto;
-	ArrayList<Employee> employee=new ArrayList<>();
+
 	public int getId() {
 		return id;
 	}
@@ -40,12 +39,7 @@ public class Employee {
 	public void setReportingto(int reportingto) {
 		this.reportingto = reportingto;
 	}
-	public ArrayList<Employee> getEmployee() {
-		return employee;
-	}
-	public void setEmployee(ArrayList<Employee> employee) {
-		this.employee = employee;
-	}
+
 
 	public Employee(int id, String firstname, String lastname, String designation, int reportingto) {
 		
