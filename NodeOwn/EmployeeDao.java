@@ -1,4 +1,4 @@
-package NodeOwn;
+package in.sts.gradleproject.genericemployeetree;
 
 
 
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class EmployeeDao {
 
-	public void getEmployee(ArrayList<Employee> getEmployeeList) {
+	public ArrayList<Employee> getEmployee() {
 
-		
+		ArrayList<Employee> getEmployeeList= new ArrayList<Employee>();
 		int id;
 		String firstname;
 		String lastname;
@@ -67,6 +67,8 @@ public class EmployeeDao {
 			{
 				System.out.println("You Successfully Signed In");
 			}
+			
+			
 
 		}
 		catch(SQLException ex)
@@ -77,6 +79,7 @@ public class EmployeeDao {
 		{
 			System.out.println(" Exception please cheack the code");
 		}
+		return getEmployeeList;
 
 
 
