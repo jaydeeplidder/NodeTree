@@ -1,8 +1,13 @@
 package in.sts.gradleproject.genericemployeetree;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+
 
 public class FinalTree {
+	
+	
 
 	/*
 	 * Created a rootNode to store all the node reference  inside it
@@ -38,11 +43,11 @@ public class FinalTree {
 
 				rootNode=new Node(parent,current);  //It will store the parent and current value where parent==0 and create a rootNode
 
-				getNodes(rootNode, EmployeeList, rootNode.getCurrent());  /*-> This calls the getNodes()method and passing the value to the parameter
-																			-> here rootNode.getCurrent() will be pass as the currentNodeParent to the method
+				createNodes(rootNode, EmployeeList);  /*-> This calls the getNodes()method and passing the value to the parameter
+																		-> here rootNode.getCurrent() will be pass as the currentNodeParent to the method
 																			-> this will be the start of the getNode() method*/
 
-
+				getNode(rootNode,EmployeeList);
 
 			}
 
@@ -55,7 +60,7 @@ public class FinalTree {
 
 	/*
 	 * getNodes()
-	 * It get all the node inside that node whenever this method is called
+	 * It gets all the node inside that node whenever this method is called
 	 * So when we got the rootNode this method was called and it was the start of this method
 	 * It performs a  recursion function as per the condition
 	 * rootNode has a child node so it check the condition if the child node has another child or not
@@ -63,40 +68,50 @@ public class FinalTree {
 	 * At the end of all it return ArrayList of node of every node
 	 */
 
-	public Node getNodes(Node currentNode,ArrayList<Employee> getEmployeeList,int currentNodeParent) {
+	public Node createNodes(Node currentNode,ArrayList<Employee> employeeList) {
 
 		ArrayList<Node> childrens=new ArrayList<Node>(); //create a new ArrayList of node for the rootNode first then as per the loop
 
 		currentNode.setChild(childrens);   //this will set the currentNode ArrayList               
-		{
-			for(Employee employee:getEmployeeList)			//first for each loop of the no.of employees in the getEmployeeList
+	
+//			for(Employee employee:getEmployeeList)			//first for each loop of the no.of employees in the getEmployeeList
+			Iterator<Employee> itr = employeeList.iterator();
+			while(itr.hasNext())
 			{
+				Employee employee=itr.next();
 
+				if(currentNode.getCurrent()==employee.getReportingto()) {					//check if the currentNodeParent==parent for e.g currentNodeParent=[current(employeeId) of the rootNode] and parent=[reportingTo of each employeeList]						
 
-				int current=employee.getId();					//it will store employeeId as per loop			
-				int parent= employee.getReportingto();			// same for reportingTo
-
-
-
-				if(currentNodeParent==parent) {					//check if the currentNodeParent==parent for e.g currentNodeParent=[current(employeeId) of the rootNode] and parent=[reportingTo of each employeeList]						
-
-					Node newNode=new Node(parent,current);			// this will create a newNode for every matched condition
+					Node newNode=new Node(employee.getReportingto(),employee.getId());			// this will create a newNode for every matched condition
 					currentNode.getChild().add(newNode);			//this is will add the node to currentNode arrayList
 
-					for(Node Child:currentNode.getChild()) {			//then it will check if the node in the currentNode has a child or not
-
-						getNodes(Child, getEmployeeList, Child.getCurrent()); //it will call the method again as a recursion and will set the arrayList for the child node if there is no child it store an empty list
-
-					}
+//					for(Node Child:currentNode.getChild()) {			//then it will check if the node in the currentNode has a child or not
+//
+//						createNodes(Child, employeeList); //it will call the method again as a recursion and will set the arrayList for the child node if there is no child it store an empty list
+//
+//					}
 
 				}
 			}
-		}
+	
 
 		return currentNode;
 
 
 
+	}
+	
+	public Node getNode(Node node,ArrayList<Employee> employeeList) {
+	
+		
+		if(node.getChild()!=null) {
+			for(Node child:node.getChild()) {
+				createNodes(child,employeeList);
+				getNode(child,employeeList);
+			}
+		}
+		
+		return node;
 	}
 
 
